@@ -201,7 +201,7 @@ def head(c, title, desc, path_cs, path_en, robots="index,follow", og=True, jsonl
                f'<meta property="og:title" content="{title}"><meta property="og:description" content="{desc}">'
                f'<meta property="og:url" content="{BASE}{own}"><meta property="og:locale" content="{c["og_loc"]}">'
                f'<meta name="twitter:card" content="summary">') if og else ""
-    return (f'<!DOCTYPE html>\n<html lang="{c["lang"]}"><head><meta charset="utf-8">'
+    return (f'<!DOCTYPE html>\n<html lang="{c["lang"]}"><head><meta charset="utf-8"><meta name="google-site-verification" content="a4sPZoX4SZJUFmvdVg86hpUA6UvDwIAtXJYAcFRQhcQ" />'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{title}</title><meta name="description" content="{desc}">'
             f'<meta name="robots" content="{robots}"><meta name="theme-color" content="#0B1020">'
