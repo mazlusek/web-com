@@ -302,11 +302,36 @@ PRIV = {
   ("Effective","Effective from 12 November 2026.")],
 }
 
-def privacy(c):
-    t = {"cs": "Zásady ochrany soukromí webu", "en": "Website privacy policy"}[c["lang"]]
-    h = head(c, f"{t} – Mazlušek s.r.o.", t, "/privacy/", "/en/privacy/", og=False) + LOGO_SYMBOL + header(c)
+JERVIS = {
+ "cs": ("Zásady ochrany soukromí aplikace Jervis", [
+  ("Správce","Správcem je Mazlušek s.r.o., IČO 07656980, Vršovců 2120/1a, 709 00 Ostrava, e-mail info@mazlusek.com."),
+  ("O aplikaci","Jervis (com.jervis.mobile) je aplikace osobního AI asistenta společnosti Mazlušek s.r.o. pro Android. Aplikace je v současnosti v interním testování."),
+  ("Přihlášení","Uživatelé se do aplikace přihlašují účtem Keycloak. Zpracováváme e-mail a jméno z tohoto účtu."),
+  ("Mikrofon a hlasová data","Aplikace používá mikrofon, včetně služby na popředí typu mikrofon, po dobu, kdy uživatel s asistentem mluví. Hlasový zvuk a zprávy v chatu se odesílají na server Jervis, kde je asistent zpracovává."),
+  ("Zabezpečení přenosu","Data jsou při přenosu šifrována."),
+  ("Reklamy, sdílení a platby","Aplikace neobsahuje reklamy. Údaje neprodáváme ani je nesdílíme s třetími stranami pro reklamní účely. Aplikace neobsahuje nákupy v aplikaci."),
+  ("Doba uložení a výmaz","Výmaz údajů můžete požádat na info@mazlusek.com."),
+  ("Vaše práva","Máte právo na přístup, opravu, výmaz a omezení zpracování svých údajů a právo podat stížnost u Úřadu pro ochranu osobních údajů (uoou.gov.cz). Uplatnit je můžete na info@mazlusek.com."),
+  ("Účinnost","Platné od 23. 11. 2026.")]),
+ "en": ("Jervis app privacy policy", [
+  ("Controller","The controller is Mazlušek s.r.o., company ID 07656980, Vršovců 2120/1a, 709 00 Ostrava, Czech Republic, e-mail info@mazlusek.com."),
+  ("About the app","Jervis (com.jervis.mobile) is a personal AI assistant app for Android by Mazlušek s.r.o. The app is currently in internal testing."),
+  ("Sign-in","Users sign in to the app with a Keycloak account. We process the e-mail address and name from that account."),
+  ("Microphone and voice data","The app uses the microphone, including a foreground service of type microphone, while the user talks to the assistant. Voice audio and chat messages are sent to the Jervis server, where the assistant processes them."),
+  ("Security in transit","Data is encrypted in transit."),
+  ("Ads, sharing and purchases","The app contains no ads. We do not sell data or share it with third parties for advertising purposes. The app has no in-app purchases."),
+  ("Retention and deletion","You can request deletion of your data at info@mazlusek.com."),
+  ("Your rights","You have the right of access, rectification, erasure and restriction of processing, and the right to lodge a complaint with the Czech Office for Personal Data Protection (uoou.gov.cz). Contact us at info@mazlusek.com."),
+  ("Effective","Effective from 23 November 2026.")]),
+}
+
+def privacy(c, jervis=False):
+    lang = c["lang"]
+    t, items = JERVIS[lang] if jervis else ({"cs": "Zásady ochrany soukromí webu", "en": "Website privacy policy"}[lang], PRIV[lang])
+    cs_path, en_path = ("/privacy/jervis/", "/en/privacy/jervis/") if jervis else ("/privacy/", "/en/privacy/")
+    h = head(c, f"{t} – Mazlušek s.r.o.", t, cs_path, en_path, og=False) + LOGO_SYMBOL + header(c)
     h += f'<main id="main"><section class="page-hero"><div class="wrap"><h1>{t}</h1></div></section><section class="sec light"><div class="wrap prose">'
-    h += "".join(f'<h2>{a}</h2><p>{b}</p>' for a, b in PRIV[c["lang"]])
+    h += "".join(f'<h2>{a}</h2><p>{b}</p>' for a, b in items)
     return h + "</div></section></main>" + footer(c)
 
 def not_found(c):
@@ -323,4 +348,6 @@ write("index.html", home(L["cs"]))
 write("en/index.html", home(L["en"]))
 write("privacy/index.html", privacy(L["cs"]))
 write("en/privacy/index.html", privacy(L["en"]))
+write("privacy/jervis/index.html", privacy(L["cs"], True))
+write("en/privacy/jervis/index.html", privacy(L["en"], True))
 write("404.html", not_found(L["cs"]))
