@@ -325,10 +325,37 @@ JERVIS = {
   ("Effective","Effective from 23 November 2026.")]),
 }
 
-def privacy(c, jervis=False):
+PUKLIC = {
+ "cs": ("Zásady ochrany soukromí aplikace Puklic", [
+  ("Správce","Správcem je Mazlušek s.r.o., IČO 07656980, Vršovců 2120/1a, 709 00 Ostrava, e-mail info@mazlusek.com."),
+  ("O aplikaci","Puklic (cz.damek.puklic.app) je klient pro komunikační službu Discord od společnosti Mazlušek s.r.o. Aplikace je v současnosti v interním testování."),
+  ("Přihlášení","K přihlášení slouží váš účet Discord. Přihlašovací údaje a přístupový token se používají pouze k přihlášení a komunikaci se službou Discord."),
+  ("Komunikace se službou Discord","Aplikace komunikuje přímo se servery společnosti Discord Inc. Zprávy, hlasové kanály a další obsah zpracovává Discord podle vlastních zásad ochrany soukromí. Mazlušek s.r.o. neprovozuje pro aplikaci vlastní server a obsah vašich zpráv ani hovorů nepřijímá."),
+  ("Mikrofon a hlasová data","Aplikace používá mikrofon, včetně služby na popředí typu mikrofon, po dobu, kdy jste připojeni k hlasovému kanálu nebo hovoru. Zvuk se odesílá do služby Discord, aby ho slyšeli ostatní účastníci. Mazlušek s.r.o. zvuk neukládá."),
+  ("Zabezpečení přenosu","Data jsou při přenosu šifrována."),
+  ("Sdílení údajů","Údaje neprodáváme ani je nesdílíme s třetími stranami pro reklamní účely."),
+  ("Doba uložení a výmaz","Výmaz údajů můžete požádat na info@mazlusek.com. Údaje uložené ve službě Discord spravuje Discord a jejich výmaz řešíte u něj."),
+  ("Vaše práva","Máte právo na přístup, opravu, výmaz a omezení zpracování svých údajů a právo podat stížnost u Úřadu pro ochranu osobních údajů (uoou.gov.cz). Uplatnit je můžete na info@mazlusek.com."),
+  ("Účinnost","Platné od 24. 11. 2026.")]),
+ "en": ("Puklic app privacy policy", [
+  ("Controller","The controller is Mazlušek s.r.o., company ID 07656980, Vršovců 2120/1a, 709 00 Ostrava, Czech Republic, e-mail info@mazlusek.com."),
+  ("About the app","Puklic (cz.damek.puklic.app) is a client for the Discord communication service by Mazlušek s.r.o. The app is currently in internal testing."),
+  ("Sign-in","You sign in with your Discord account. Sign-in details and the access token are used only to sign in and communicate with the Discord service."),
+  ("Communication with Discord","The app communicates directly with the servers of Discord Inc. Messages, voice channels and other content are processed by Discord under its own privacy policy. Mazlušek s.r.o. does not operate a server for the app and does not receive the content of your messages or calls."),
+  ("Microphone and voice data","The app uses the microphone, including a foreground service of type microphone, while you are connected to a voice channel or call. Audio is sent to the Discord service so that other participants can hear you. Mazlušek s.r.o. does not store the audio."),
+  ("Security in transit","Data is encrypted in transit."),
+  ("Data sharing","We do not sell data or share it with third parties for advertising purposes."),
+  ("Retention and deletion","You can request deletion of your data at info@mazlusek.com. Data stored in the Discord service is managed by Discord, and you request its deletion from Discord."),
+  ("Your rights","You have the right of access, rectification, erasure and restriction of processing, and the right to lodge a complaint with the Czech Office for Personal Data Protection (uoou.gov.cz). Contact us at info@mazlusek.com."),
+  ("Effective","Effective from 24 November 2026.")]),
+}
+
+APPS = {"jervis": JERVIS, "puklic": PUKLIC}
+
+def privacy(c, app=None):
     lang = c["lang"]
-    t, items = JERVIS[lang] if jervis else ({"cs": "Zásady ochrany soukromí webu", "en": "Website privacy policy"}[lang], PRIV[lang])
-    cs_path, en_path = ("/privacy/jervis/", "/en/privacy/jervis/") if jervis else ("/privacy/", "/en/privacy/")
+    t, items = APPS[app][lang] if app else ({"cs": "Zásady ochrany soukromí webu", "en": "Website privacy policy"}[lang], PRIV[lang])
+    cs_path, en_path = (f"/privacy/{app}/", f"/en/privacy/{app}/") if app else ("/privacy/", "/en/privacy/")
     h = head(c, f"{t} – Mazlušek s.r.o.", t, cs_path, en_path, og=False) + LOGO_SYMBOL + header(c)
     h += f'<main id="main"><section class="page-hero"><div class="wrap"><h1>{t}</h1></div></section><section class="sec light"><div class="wrap prose">'
     h += "".join(f'<h2>{a}</h2><p>{b}</p>' for a, b in items)
@@ -348,6 +375,8 @@ write("index.html", home(L["cs"]))
 write("en/index.html", home(L["en"]))
 write("privacy/index.html", privacy(L["cs"]))
 write("en/privacy/index.html", privacy(L["en"]))
-write("privacy/jervis/index.html", privacy(L["cs"], True))
-write("en/privacy/jervis/index.html", privacy(L["en"], True))
+write("privacy/jervis/index.html", privacy(L["cs"], "jervis"))
+write("en/privacy/jervis/index.html", privacy(L["en"], "jervis"))
+write("privacy/puklic/index.html", privacy(L["cs"], "puklic"))
+write("en/privacy/puklic/index.html", privacy(L["en"], "puklic"))
 write("404.html", not_found(L["cs"]))
