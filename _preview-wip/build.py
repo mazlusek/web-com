@@ -350,7 +350,30 @@ PUKLIC = {
   ("Effective","Effective from 24 November 2026.")]),
 }
 
-APPS = {"jervis": JERVIS, "puklic": PUKLIC}
+BMS = {
+ "cs": ("Zásady ochrany soukromí aplikace BMS Script Designer", [
+  ("Správce","Správcem je Mazlušek s.r.o., IČO 07656980, Vršovců 2120/1a, 709 00 Ostrava, e-mail damek@mazlusek.com."),
+  ("O aplikaci","BMS Script Designer (coba.mis.bms.scriptdesigner) je vývojářský nástroj společnosti Mazlušek s.r.o. k editaci, kompilaci a spouštění skriptů a řetězců systému BMS. Je určen dospělým odborníkům."),
+  ("Komunikace se serverem BMS","Aplikace komunikuje výhradně se serverem BMS, jehož adresu zadáte při prvním spuštění. Přes tento server se přenáší uživatelské jméno a heslo (HTTP Basic; uchovávají se jen v paměti aplikace a nikam se neukládají) nebo přihlášení Entra ID a také obsah skriptů a řetězců BMS. Nastavení spojení se serverem je na vás a na organizaci, která server spravuje."),
+  ("Data skriptů","Data skriptů a řetězců žijí na serveru BMS, který spravuje vaše organizace. Mazlušek s.r.o. jako provozovatel aplikace k nim nemá přístup a nepoužívá pro aplikaci vlastní servery."),
+  ("Údaje uložené v zařízení","V zařízení se ukládá pouze adresa serveru. Smaže se odinstalací aplikace nebo vymazáním dat aplikace."),
+  ("Účet, reklamy a analytika","Aplikace nemá vlastní účet ani registraci. Neobsahuje reklamy ani reklamní identifikátor, žádnou analytiku, hlášení pádů ani Firebase. Žádné údaje nejsou předávány třetím stranám."),
+  ("Oprávnění","Aplikace vyžaduje pouze oprávnění k přístupu k internetu a ke zjištění stavu sítě. Nepoužívá kameru, mikrofon, polohu, oznámení ani kontakty."),
+  ("Kontakt","Dotazy k ochraně soukromí zasílejte na damek@mazlusek.com."),
+  ("Účinnost","Platné od 27. 11. 2026.")]),
+ "en": ("BMS Script Designer app privacy policy", [
+  ("Controller","The controller is Mazlušek s.r.o., company ID 07656980, Vršovců 2120/1a, 709 00 Ostrava, Czech Republic, e-mail damek@mazlusek.com."),
+  ("About the app","BMS Script Designer (coba.mis.bms.scriptdesigner) is a developer tool by Mazlušek s.r.o. for editing, compiling and running scripts and strings of the BMS system. It is intended for adult professionals."),
+  ("Communication with the BMS server","The app communicates exclusively with the BMS server whose address you enter on first launch. Through this server it transmits your user name and password (HTTP Basic; held only in the app's memory and never stored) or an Entra ID sign-in, as well as the content of BMS scripts and strings. The connection to the server is configured by you and the organization that manages the server."),
+  ("Script data","Script and string data live on the BMS server managed by your organization. Mazlušek s.r.o., as the operator of the app, has no access to it and does not use its own servers for the app."),
+  ("Data stored on the device","Only the server address is stored on the device. It is deleted when you uninstall the app or clear the app's data."),
+  ("Account, ads and analytics","The app has no account or registration of its own. It contains no ads or advertising ID, no analytics, no crash reporting and no Firebase. No data is shared with third parties."),
+  ("Permissions","The app requires only the permissions to access the internet and to view the network state. It does not use the camera, microphone, location, notifications or contacts."),
+  ("Contact","Send privacy questions to damek@mazlusek.com."),
+  ("Effective","Effective from 27 November 2026.")]),
+}
+
+APPS = {"jervis": JERVIS, "puklic": PUKLIC, "bms-script-designer": BMS}
 
 def privacy(c, app=None):
     lang = c["lang"]
@@ -379,4 +402,6 @@ write("privacy/jervis/index.html", privacy(L["cs"], "jervis"))
 write("en/privacy/jervis/index.html", privacy(L["en"], "jervis"))
 write("privacy/puklic/index.html", privacy(L["cs"], "puklic"))
 write("en/privacy/puklic/index.html", privacy(L["en"], "puklic"))
+write("privacy/bms-script-designer/index.html", privacy(L["cs"], "bms-script-designer"))
+write("en/privacy/bms-script-designer/index.html", privacy(L["en"], "bms-script-designer"))
 write("404.html", not_found(L["cs"]))
